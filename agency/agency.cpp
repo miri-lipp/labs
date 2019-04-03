@@ -1,26 +1,8 @@
 //
-// Created by Miriam Lipkovich on 2019-03-29.
+// Created by Miriam Lipkovich on 2019-04-03.
 //
 
 #include "agency.h"
-int main() {
-    std::fstream smert;
-    smert.open("Agency.txt", std::ios::in | std::ios::out);
-    int index, quantity;
-    if (!smert.is_open()){
-        throw std::logic_error("error");
-    }
-    int size = Length(smert);
-    smert.close();
-    smert.open("Agency.txt", std::ios::in | std::ios::out);
-    Agency b(size);
-    b.append(smert);
-    std::cout<<b;
-    std::cin>>index;
-    std::cin>>quantity;
-    std::cout<<b.Booking(index, quantity);
-    return 0;
-}
 
 int Length(std::fstream &smert){
     char buff[128];
@@ -74,7 +56,7 @@ void Agency::append(std::fstream &smert) {
         buf[4] = str;
         str.clear();
         k.date = {.tm_year = stoi(buf[0], nullptr, 10) - 1900, .tm_mon = stoi(buf[1], nullptr, 10) - 1, .tm_mday = stoi(buf[2], nullptr, 10),
-                  .tm_hour = stoi(buf[3], nullptr, 10), .tm_min = stoi(buf[4], nullptr, 10)};
+                .tm_hour = stoi(buf[3], nullptr, 10), .tm_min = stoi(buf[4], nullptr, 10)};
         agency.push_back(k);
     }
     sort_by_date();
