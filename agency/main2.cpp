@@ -3,17 +3,19 @@
 //
 #include "agency.h"
 int main() {
-    std::fstream smert;
-    smert.open("Agency.txt", std::ios::in | std::ios::out);
+    std::ifstream smert;
+    smert.open("Agency.txt");
     int index, quantity;
     if (!smert.is_open()){
         throw std::logic_error("error");
     }
     int size = Length(smert);
     smert.close();
-    smert.open("Agency.txt", std::ios::in | std::ios::out);
+    smert.open("Agency.txt");
     Agency b(size);
-    b.append(smert);
+    smert>>b;
+    b.sort_by_date();
+    b.sort_by_name();
     std::cout<<b;
     std::cin>>index;
     std::cin>>quantity;
