@@ -13,7 +13,7 @@
 #include <algorithm>
 #include <ctime>
 #include <iomanip>
-int Length(std::fstream &smert);
+int Length(std::ifstream &smert);
 int compar(const void* a, const void *b);
 struct event{
     std::string name;
@@ -27,12 +27,11 @@ class Agency {
     std::vector<event> agency;
 public:
     friend std::ostream& operator <<(std::ostream& out, Agency& a);
-    friend std::istream operator >>(std::istream& in, Agency& a);
+    friend std::ifstream& operator >>(std::ifstream& in, Agency& a);
     Agency(int size);
     Agency(Agency const &a) = delete;
     Agency(Agency &&a) = delete;
     virtual ~Agency();
-    void append(std::fstream &smert);
     int Booking(int index, int quantity);
     std::vector<event>::iterator begin();
     std::vector<event>::iterator end();

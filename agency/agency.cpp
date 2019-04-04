@@ -4,7 +4,7 @@
 
 #include "agency.h"
 
-int Length(std::fstream &smert){
+int Length(std::ifstream &smert){
     char buff[128];
     int count = 0;
     while(smert.getline(buff, 128)){
@@ -20,11 +20,11 @@ std::ostream& operator <<(std::ostream& out, Agency& a){
     return out;
 }
 
-void Agency::append(std::fstream &smert) {
+std::ifstream& operator >>(std::ifstream &in, Agency& a) {
     char buff[128];
     std::string str, str1, buf[5];
     event k;
-    while (smert.getline(buff, 128)) {
+    while (in.getline(buff, 128)) {
         str = buff;
         auto s = str.find(';');
         str1 = str.substr(0, s);
@@ -57,10 +57,9 @@ void Agency::append(std::fstream &smert) {
         str.clear();
         k.date = {.tm_year = stoi(buf[0], nullptr, 10) - 1900, .tm_mon = stoi(buf[1], nullptr, 10) - 1, .tm_mday = stoi(buf[2], nullptr, 10),
                 .tm_hour = stoi(buf[3], nullptr, 10), .tm_min = stoi(buf[4], nullptr, 10)};
-        agency.push_back(k);
+        a.agency.push_back(k);
     }
-    sort_by_date();
-    sort_by_name();
+    return in;
 }
 
 Agency::Agency(int size): size(size){
